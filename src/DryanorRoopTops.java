@@ -18,7 +18,8 @@ public class DryanorRoopTops extends AbstractScript{
 
     GroundItem item = null;
 
-    Tile midPoint = new Tile(3104, 3274);
+    Area areaPoint = new Area(3103, 3276, 3106, 3273);
+    Tile midPoint = new Tile(3105, 3274);
 
     Area firstRoof = new Area(3097, 3281, 3102, 3277, 3);
     Area secondRoof = new Area(3090, 3276, 3089, 3273, 3);
