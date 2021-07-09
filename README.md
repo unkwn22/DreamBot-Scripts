@@ -12,7 +12,6 @@
   3. Adding dependencies through File > Project Structure > Libraries > (+) > locating your DreamBot client.jar file
   4. Adding artifact through the same windows, this time in Artifacts tab Add the workspace you have created, remove Extracted in output Layout
   5. Edit output directory to ex) C:\Users\YOUR_USER\DreamBot\Scripts
-  
 ## To Compile
   1. Build > Build Artifacts
 
