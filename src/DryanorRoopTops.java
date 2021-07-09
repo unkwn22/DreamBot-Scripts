@@ -1,7 +1,7 @@
-import org.dreambot.api.methods.MethodProvider;
 import org.dreambot.api.methods.item.GroundItems;
 import org.dreambot.api.methods.map.Area;
 import org.dreambot.api.methods.map.Tile;
+import org.dreambot.api.methods.walking.impl.Walking;
 import org.dreambot.api.script.AbstractScript;
 import org.dreambot.api.script.Category;
 import org.dreambot.api.script.ScriptManifest;
@@ -17,6 +17,8 @@ public class DryanorRoopTops extends AbstractScript{
     State state;
 
     GroundItem item = null;
+
+    Tile midPoint = new Tile(3104, 3274);
 
     Area firstRoof = new Area(3097, 3281, 3102, 3277, 3);
     Area secondRoof = new Area(3088, 3275, 3090, 3278, 3);
@@ -51,63 +53,42 @@ public class DryanorRoopTops extends AbstractScript{
 
 
     private enum State{
-        WALL1, ROPE1, ROPE2, NARROW, WALL2, GAP, CRATE, ITEM
+        WALL1, ROPE1, ROPE2, NARROW, WALL2, GAP, CRATE, ITEM, MIDPOINT
     }
 
     private State getState(){
         item = GroundItems.closest("Mark of grace");
-        if(getLocalPlayer().getTile().equals(crateEnd) && getLocalPlayer().getAnimation() == -1){
+
+        if(getLocalPlayer().getTile().equals(crateEnd)){
+            state = State.MIDPOINT;
+        } else if(getLocalPlayer().getTile().equals(midPoint)){
             state = State.WALL1;
-        }else if(firstRoof.contains(getLocalPlayer())){
-            if(firstRoof.contains(item) && firstRoof.contains(getLocalPlayer())){
-                MethodProvider.log("ITEM");
-                state = State.ITEM;
-            }else if (firstRoof.contains(getLocalPlayer()) && getLocalPlayer().getAnimation() == -1){
-                MethodProvider.log("ROPE1");
-                state = State.ROPE1;
-            }
-        }else if(secondRoof.contains(getLocalPlayer())){
-            if(secondRoof.contains(item) && secondRoof.contains(getLocalPlayer())){
-                MethodProvider.log("ITEM");
-                state = State.ITEM;
-            }else if(secondRoof.contains(getLocalPlayer()) && getLocalPlayer().getAnimation() == -1){
-                MethodProvider.log("ROPE2");
-                state = State.ROPE2;
-            }
-        }else if(thirdRoof.contains(getLocalPlayer())){
-            if(thirdRoof.contains(item) && thirdRoof.contains(getLocalPlayer())){
-                MethodProvider.log("ITEM");
-                state = State.ITEM;
-            }else if (thirdRoof.contains(getLocalPlayer()) && getLocalPlayer().getAnimation() == -1){
-                MethodProvider.log("NARROW");
-                state = State.NARROW;
-            }
-        }else if(fourthRoof.contains(getLocalPlayer())){
-            if(fourthRoof.contains(item) && fourthRoof.contains(getLocalPlayer())){
-                MethodProvider.log("ITEM");
-                state = State.ITEM;
-            }else if(fourthRoof.contains(getLocalPlayer()) && getLocalPlayer().getAnimation() == -1){
-                MethodProvider.log("WALL2");
-                state = State.WALL2;
-            }
-        }else if(fifthRoof.contains(getLocalPlayer())){
-            if(fifthRoof.contains(item) && fifthRoof.contains(getLocalPlayer())){
-                MethodProvider.log("ITEM");
-                state = State.ITEM;
-            }else if(fifthRoof.contains(getLocalPlayer()) && getLocalPlayer().getAnimation() == -1){
-                MethodProvider.log("GAP");
-                state = State.GAP;
-            }
-        }else if(sixthRoof.contains(getLocalPlayer())){
-            if(sixthRoof.contains(item) && sixthRoof.contains(getLocalPlayer())){
-                MethodProvider.log("ITEM");
-                state = State.ITEM;
-            }else if(sixthRoof.contains(getLocalPlayer()) && getLocalPlayer().getAnimation() == -1){
-                MethodProvider.log("CRATE");
-                state = State.CRATE;
-            }
-        }else{
-            state = State.WALL1;
+        } else if((getLocalPlayer().getTile().equals(wall1End) || firstRoof.contains(getLocalPlayer()) )&& !firstRoof.contains(item)){
+            state = State.ROPE1;
+        } else if(getLocalPlayer().getTile().equals(wall1End) && firstRoof.contains(item)){
+            state = State.ITEM;
+        } else if((getLocalPlayer().getTile().equals(rope1End) || secondRoof.contains(getLocalPlayer())) && !secondRoof.contains(item)){
+            state = State.ROPE2;
+        } else if(getLocalPlayer().getTile().equals(rope1End) && secondRoof.contains(item)){
+            state = State.ITEM;
+        } else if((getLocalPlayer().getTile().equals(rope2End) || thirdRoof.contains(getLocalPlayer())) && !thirdRoof.contains(item)){
+            state = State.NARROW;
+        } else if(getLocalPlayer().getTile().equals(rope2End) && thirdRoof.contains(item)){
+            state = State.ITEM;
+        } else if((getLocalPlayer().getTile().equals(narrowEnd) || fourthRoof.contains(getLocalPlayer())) && !fourthRoof.contains(item)){
+            state = State.WALL2;
+        } else if(getLocalPlayer().getTile().equals(narrowEnd) && fourthRoof.contains(item)){
+            state = State.ITEM;
+        } else if((getLocalPlayer().getTile().equals(wall2End) || fifthRoof.contains(getLocalPlayer())) && !fifthRoof.contains(item)){
+            state = State.GAP;
+        } else if(getLocalPlayer().getTile().equals(wall2End) && fifthRoof.contains(item)){
+            state = State.ITEM;
+        } else if((getLocalPlayer().getTile().equals(gapEnd) || sixthRoof.contains(getLocalPlayer())) && !sixthRoof.contains(item)){
+            state = State.CRATE;
+        } else if(getLocalPlayer().getTile().equals(gapEnd) && sixthRoof.contains(item)){
+            state = State.ITEM;
+        } else{
+            state = State.MIDPOINT;
         }
         return state;
     }
@@ -116,7 +97,10 @@ public class DryanorRoopTops extends AbstractScript{
     public int onLoop() {
         if(getState().equals(State.ITEM)){
             item.interact("Take");
-            sleep(2000,3000);
+            sleep(1000,2000);
+        } else if(getState().equals(State.MIDPOINT)){
+            Walking.walk(midPoint);
+            sleepUntil(() -> getLocalPlayer().getTile().equals(midPoint), 5000);
         } else if(getState().equals(State.WALL1)){
             wall1 = GameObjects.closest(c -> c != null && c.getName().contentEquals("Rough wall") && c.getTile().equals(wall1Tile));
             wall1.interact("Climb");
@@ -143,9 +127,10 @@ public class DryanorRoopTops extends AbstractScript{
             sleepUntil(() -> getLocalPlayer().getTile().equals(gapEnd), 6000);
         }else if(getState().equals(State.CRATE)){
             crate = GameObjects.closest(c -> c != null && c.getName().contentEquals("Crate") && c.getTile().equals(crateTile));
+            sleep(1000,2000);
             crate.interact("Climb-down");
             sleepUntil(() -> getLocalPlayer().getTile().equals(crateEnd), 6000);
         }
-        return 0;
+        return 500;
     }
 }
