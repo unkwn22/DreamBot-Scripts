@@ -21,7 +21,8 @@ public class DryanorRoopTops extends AbstractScript{
     Tile midPoint = new Tile(3104, 3274);
 
     Area firstRoof = new Area(3097, 3281, 3102, 3277, 3);
-    Area secondRoof = new Area(3088, 3275, 3090, 3278, 3);
+    Area secondRoof = new Area(3090, 3276, 3089, 3273, 3);
+    Area secondRoof2 = new Area(3088, 3275, 3088, 3274, 3);
     Area thirdRoof = new Area(3092, 3267, 3094, 3265, 3);
     Area fourthRoof = new Area(3088, 3261, 3088, 3257, 3);
     Area fifthRoof = new Area(3087, 3255, 3094, 3255, 3);
@@ -67,9 +68,9 @@ public class DryanorRoopTops extends AbstractScript{
             state = State.ROPE1;
         } else if(getLocalPlayer().getTile().equals(wall1End) && firstRoof.contains(item)){
             state = State.ITEM;
-        } else if((getLocalPlayer().getTile().equals(rope1End) || secondRoof.contains(getLocalPlayer())) && !secondRoof.contains(item)){
+        } else if((getLocalPlayer().getTile().equals(rope1End) || secondRoof.contains(getLocalPlayer()) || secondRoof2.contains(getLocalPlayer())) && (!secondRoof.contains(item) && !secondRoof2.contains(item))){
             state = State.ROPE2;
-        } else if(getLocalPlayer().getTile().equals(rope1End) && secondRoof.contains(item)){
+        } else if((getLocalPlayer().getTile().equals(rope1End) && secondRoof.contains(item)) || getLocalPlayer().getTile().equals(rope1End) && secondRoof2.contains(item)){
             state = State.ITEM;
         } else if((getLocalPlayer().getTile().equals(rope2End) || thirdRoof.contains(getLocalPlayer())) && !thirdRoof.contains(item)){
             state = State.NARROW;
@@ -100,7 +101,7 @@ public class DryanorRoopTops extends AbstractScript{
             sleep(1000,2000);
         } else if(getState().equals(State.MIDPOINT)){
             Walking.walk(midPoint);
-            sleepUntil(() -> getLocalPlayer().getTile().equals(midPoint), 5000);
+            sleepUntil(() -> getLocalPlayer().getTile().equals(midPoint), 1000);
         } else if(getState().equals(State.WALL1)){
             wall1 = GameObjects.closest(c -> c != null && c.getName().contentEquals("Rough wall") && c.getTile().equals(wall1Tile));
             wall1.interact("Climb");
