@@ -8,7 +8,7 @@ import org.dreambot.api.wrappers.interactive.GameObject;
 
 @ScriptManifest(name = "Agility", description = "First script", author = "lsjc12911",
         version = 1.0, category = Category.WOODCUTTING, image = "")
-public class Agility extends AbstractScript {
+public class GnomeStrongholdAgilityCourse extends AbstractScript {
 
     State state;
 
@@ -17,6 +17,7 @@ public class Agility extends AbstractScript {
     //single tile
     Tile startTile = new Tile(2474, 3436);
 
+    //indicating end tiles
     Tile endLogTile = new Tile(2474,3429);
     Tile endNet1Tile = new Tile(2473, 3423, 1);
     Tile endTree1Tile = new Tile(2473, 3420, 2);
@@ -24,6 +25,15 @@ public class Agility extends AbstractScript {
     Tile endTree2Tile = new Tile(2487, 3420);
     Tile endNet2Tile = new Tile(2485,3428, 0);
     Tile endPipeTile = new Tile(2484,3437);
+
+    //indicating obstacle tiles
+    Tile logTile = new Tile(2474,3435);
+    Tile net1Tile = new Tile(2473,3425);
+    Tile tree1Tile = new Tile(2473,3422, 1);
+    Tile ropeTile = new Tile(2478,3420, 2);
+    Tile tree2Tile = new Tile(2486, 3419, 2);
+    Tile net2Tile = new Tile(2485, 3426);
+    Tile pipeTile = new Tile(2484, 3431);
 
     GameObject log;
     GameObject net1;
@@ -33,16 +43,9 @@ public class Agility extends AbstractScript {
     GameObject net2;
     GameObject pipe;
 
-    Tile logTile = new Tile(2474,3435);
-    Tile net1Tile = new Tile(2473,3425);
-    Tile tree1Tile = new Tile(2473,3422, 1);
-    Tile ropeTile = new Tile(2478,3420, 2);
-    Tile tree2Tile = new Tile(2486, 3419, 2);
-    Tile net2Tile = new Tile(2485, 3426);
-    Tile pipeTile = new Tile(2484, 3431);
-
     @Override
     public int onLoop() {
+
         if(getState().equals(State.LOG)){
             log = GameObjects.closest(c -> c != null && c.getName().contentEquals("Log balance") && c.getTile().equals(logTile));
             log.interact("Walk-across");
@@ -75,6 +78,7 @@ public class Agility extends AbstractScript {
         return 500;
     }
 
+    //
     private enum State{
         LOG, NET1, TREE1, ROPE, TREE2, NET2, PIPE
     }
