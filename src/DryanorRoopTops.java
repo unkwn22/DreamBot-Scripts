@@ -10,7 +10,7 @@ import org.dreambot.api.wrappers.interactive.GameObject;
 import org.dreambot.api.wrappers.items.GroundItem;
 
 @ScriptManifest(name = "DraynorRoofTop", description = "Second Script", author = "lsjc12911",
-        version = 1.0, category = Category.WOODCUTTING, image = "")
+        version = 1.0, category = Category.AGILITY, image = "")
 
 public class DryanorRoopTops extends AbstractScript{
 

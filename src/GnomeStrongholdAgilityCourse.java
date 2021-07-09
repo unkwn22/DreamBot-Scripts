@@ -7,7 +7,7 @@ import org.dreambot.api.methods.interactive.GameObjects;
 import org.dreambot.api.wrappers.interactive.GameObject;
 
 @ScriptManifest(name = "Agility", description = "First script", author = "lsjc12911",
-        version = 1.0, category = Category.WOODCUTTING, image = "")
+        version = 1.0, category = Category.AGILITY, image = "")
 public class GnomeStrongholdAgilityCourse extends AbstractScript {
 
     State state;
