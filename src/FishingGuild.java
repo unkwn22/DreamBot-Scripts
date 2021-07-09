@@ -21,7 +21,7 @@ public class FishingGuild extends AbstractScript{
     State state;
 
     Tile fishingTile = new Tile(2599, 3422);
-    Area fishingArea = new Area(2595, 3420, 2604, 3425);
+    Area fishingArea = new Area(2595, 3419, 2605, 3426);
     Area bankArea = new Area(2586, 3418, 2588, 3421);
 
     NPC fishingSpot;
