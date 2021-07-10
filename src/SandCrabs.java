@@ -21,7 +21,7 @@ public class SandCrabs extends AbstractScript {
     int idle = 0;
 
     Tile returnTile = new Tile(1749, 3469);
-    Tile awayTile = new Tile(1749,3489);
+    Tile awayTile = new Tile(1750,3484);
     Tile awayTile2 = new Tile(1748, 3496);
 
     Area area = new Area(1745, 3467, 1752, 3472);
@@ -76,7 +76,7 @@ public class SandCrabs extends AbstractScript {
             log("RESETTING AGRO");
             sleepUntil(() -> getLocalPlayer().getTile().equals(awayTile), 5000);
             Walking.walk(awayTile2);
-            sleepUntil(() -> getLocalPlayer().getTile().equals(awayTile), 4000);
+            sleepUntil(() -> getLocalPlayer().getTile().equals(awayTile2), 6000);
             Walking.walk(awayTile);
             sleepUntil(() -> getLocalPlayer().getTile().equals(awayTile), 5000);
             idle = 0;
@@ -88,7 +88,7 @@ public class SandCrabs extends AbstractScript {
         } else if(getState().equals(State.HEAL)){
             log("HEALING");
             Inventory.interact(food, "Eat");
-            sleep(1000);
+            sleepUntil(() -> getLocalPlayer().getHealthPercent() >= 32, 3000);
         } else if(getState().equals(State.PICK_UP)){
             item.interact("Take");
             sleep(1000,2000);
