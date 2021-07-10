@@ -4,6 +4,7 @@ import org.dreambot.api.methods.interactive.NPCs;
 import org.dreambot.api.methods.item.GroundItems;
 import org.dreambot.api.methods.map.Area;
 import org.dreambot.api.methods.map.Tile;
+import org.dreambot.api.methods.tabs.Tabs;
 import org.dreambot.api.methods.walking.impl.Walking;
 import org.dreambot.api.script.AbstractScript;
 import org.dreambot.api.script.Category;
@@ -13,6 +14,7 @@ import org.dreambot.api.wrappers.interactive.GameObject;
 import org.dreambot.api.wrappers.interactive.NPC;
 import org.dreambot.api.wrappers.items.GroundItem;
 
+import java.io.IOException;
 import java.util.Random;
 
 @ScriptManifest(name = "FishingGuild", description = "Fourth Script", author = "lsjc12911",
@@ -69,6 +71,7 @@ public class FishingGuild extends AbstractScript{
             if(Bank.openClosest()){
                 Bank.deposit("Raw lobster", 27);
                 if(Bank.count("Raw lobster") == 600){
+                    Tabs.logout();
                     stop();
                 }
             }else {
