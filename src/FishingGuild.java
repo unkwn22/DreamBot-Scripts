@@ -24,8 +24,8 @@ public class FishingGuild extends AbstractScript{
 
     Random randomNum = new Random();
 
-    Tile fishingTile = new Tile(2599, 3422);
-    Area fishingArea = new Area(2595, 3419, 2605, 3426);
+    Tile fishingTile = new Tile(2600, 3422);
+    Area fishingArea = new Area(2598, 3419, 2605, 3426);
     Tile bankTile = new Tile(2587, 3419);
     Area bankArea = new Area(2586, 3418, 2588, 3421);
     boolean isFishing = false;
@@ -39,15 +39,20 @@ public class FishingGuild extends AbstractScript{
 
     private State getState(){
 
-        if(fishingArea.contains(getLocalPlayer()) && getLocalPlayer().getAnimation() == -1  && !Inventory.isFull()){
+        if((fishingArea.contains(getLocalPlayer()) || getLocalPlayer().getTile().equals(fishingTile)) && getLocalPlayer().getAnimation() == -1  && !Inventory.isFull()){
+            log("FISH");
             state = State.FISH;
-        } else if(fishingArea.contains(getLocalPlayer()) && getLocalPlayer().getAnimation() == -1 && Inventory.isFull()){
+        } else if(!bankArea.contains(getLocalPlayer()) && getLocalPlayer().getAnimation() == -1 && Inventory.isFull()){
+            log("MOVE2BANK");
             state = State.MOVE2BANK;
         } else if(bankArea.contains(getLocalPlayer()) && Inventory.isFull()){
+            log("BANKING");
             state = State.BANKING;
-        } else if(bankArea.contains(getLocalPlayer()) && !Inventory.isFull()){
+        } else if(!fishingArea.contains(getLocalPlayer()) && !Inventory.isFull()){
+            log("MOVE2FISH");
             state = State.MOVE2FISH;
         } else {
+            log("FISHING");
             state = State.FISHING;
         }
         return state;
