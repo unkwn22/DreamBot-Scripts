@@ -1,4 +1,4 @@
-import org.dreambot.api.methods.MethodProvider;
+import org.dreambot.api.methods.input.Camera;
 import org.dreambot.api.methods.item.GroundItems;
 import org.dreambot.api.methods.map.Area;
 import org.dreambot.api.methods.map.Tile;
@@ -13,10 +13,13 @@ import org.dreambot.api.wrappers.items.GroundItem;
 @ScriptManifest(name = "CanifisRoofTops", description = "Third Script", author = "lsjc12911",
         version = 1.0, category = Category.AGILITY, image = "")
 
-public class CanifisRoofTops extends AbstractScript{
+public class CanifisRoofTops extends AbstractScript {
+
+    //camera
+    final static int PITCH = 383;
+    final static int YAW = 1578;
 
     State state;
-
     GroundItem item = null;
 
     //midWay
@@ -70,7 +73,7 @@ public class CanifisRoofTops extends AbstractScript{
     Area seventhRoof = new Area(3515, 3482, 3510, 3475, 2);
 
     private enum State{
-        TREE, GAP1, GAP2, GAP3, GAP4, POLE, GAP5, GAP6, MID_FALL, ITEM
+        TREE, GAP1, GAP2, GAP3, GAP4, POLE, GAP5, GAP6, MID_FALL, ITEM, ON_ROOF
     }
 
     private State getState(){
@@ -112,12 +115,21 @@ public class CanifisRoofTops extends AbstractScript{
             state = State.MID_FALL;
         } else if(firstFall.contains(getLocalPlayer()) || secondFall.contains(getLocalPlayer()) || lastFall.contains(getLocalPlayer())){
             state = State.TREE;
+        } else if(firstRoof.contains(getLocalPlayer()) || secondRoof.contains(getLocalPlayer()) || thirdRoof.contains(getLocalPlayer()) || fourthRoof.contains(getLocalPlayer()) || fifthRoof.contains(getLocalPlayer()) || sixthRoof.contains(getLocalPlayer()) || seventhRoof.contains(getLocalPlayer())){
+            state = State.ON_ROOF;
         }
         return state;
     }
 
     @Override
     public int onLoop() {
+        //customized camera angle for canifis roof tops
+        if(Camera.getYaw() != YAW && Camera.getPitch() != PITCH){
+            log("Initiating camera turn");
+            Camera.keyboardRotateTo(YAW, PITCH);
+            sleepUntil(() -> Camera.getYaw() == YAW && Camera.getPitch() == PITCH, 1000);
+        }
+
         if(getState().equals(State.ITEM)){
             item.interact("Take");
             sleep(1000,2000);
@@ -128,34 +140,42 @@ public class CanifisRoofTops extends AbstractScript{
             tree = GameObjects.closest(c -> c != null && c.getName().contentEquals("Tall tree") && c.getTile().equals(treeTile));
             tree.interact("Climb");
             sleepUntil(() -> getLocalPlayer().getTile().equals(treeEnd), 6000);
+
         } else if(getState().equals(State.GAP1)){
             gap1 = GameObjects.closest(c -> c != null && c.getName().contentEquals("Gap") && c.getTile().equals(gap1Tile));
             gap1.interact("Jump");
             sleepUntil(() -> getLocalPlayer().getTile().equals(gap1End), 6000);
+
         } else if(getState().equals(State.GAP2)){
             gap2 = GameObjects.closest(c -> c != null && c.getName().contentEquals("Gap") && c.getTile().equals(gap2Tile));
             gap2.interact("Jump");
             sleepUntil(() -> getLocalPlayer().getTile().equals(gap2End), 6000);
+
         } else if(getState().equals(State.GAP3)){
             gap3 = GameObjects.closest(c -> c != null && c.getName().contentEquals("Gap") && c.getTile().equals(gap3Tile));
             gap3.interact("Jump");
             sleepUntil(() -> getLocalPlayer().getTile().equals(gap3End), 6000);
+
         } else if(getState().equals(State.GAP4)){
             gap4 = GameObjects.closest(c -> c != null && c.getName().contentEquals("Gap") && c.getTile().equals(gap4Tile));
             gap4.interact("Jump");
             sleepUntil(() -> getLocalPlayer().getTile().equals(gap4End), 6000);
+
         } else if(getState().equals(State.POLE)){
             pole = GameObjects.closest(c -> c != null && c.getName().contentEquals("Pole-vault") && c.getTile().equals(poleTile));
             pole.interact("Vault");
             sleepUntil(() -> getLocalPlayer().getTile().equals(poleEnd), 6000);
+
         } else if(getState().equals(State.GAP5)){
             gap5 = GameObjects.closest(c -> c != null && c.getName().contentEquals("Gap") && c.getTile().equals(gap5Tile));
             gap5.interact("Jump");
             sleepUntil(() -> getLocalPlayer().getTile().equals(gap5End), 6000);
+
         } else if(getState().equals(State.GAP6)){
             gap6 = GameObjects.closest(c -> c != null && c.getName().contentEquals("Gap") && c.getTile().equals(gap6Tile));
             gap6.interact("Jump");
             sleepUntil(() -> getLocalPlayer().getTile().equals(gap6End), 6000);
+
         }
         return 500;
     }
