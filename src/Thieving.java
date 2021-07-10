@@ -24,7 +24,7 @@ public class Thieving extends AbstractScript {
     Area pickingArea = new Area(2624, 3307, 2643, 3288);
     Tile pickTile = new Tile(2631, 3295);
     Area bankArea = new Area(2649, 3286, 2654, 3281);
-    Tile bankTile = new Tile(2649, 3284);
+    Tile bankTile = new Tile(2651, 3284);
 
     private enum State{
         THIEVING, OPEN_ALL, STUNNED, HEAL, MOVE2BANK, RESTOCK, MOVE2PICK
@@ -37,15 +37,15 @@ public class Thieving extends AbstractScript {
 
         if(Inventory.count("Coin pouch") == 28){
             state = State.OPEN_ALL;
-        } else if(!getLocalPlayer().isInteractedWith() && Inventory.count("Coin pouch") < 28 && pickingArea.contains(getLocalPlayer())){
+        } else if(!getLocalPlayer().isInteractedWith() && Inventory.count("Coin pouch") < 28 && pickingArea.contains(getLocalPlayer()) && Inventory.contains(food)){
            state = State.THIEVING;
         } else if(getLocalPlayer().getAnimation() == 424){
             state = State.STUNNED;
-        } else if(!Inventory.contains(food)){
+        } else if(!Inventory.contains(food) && !bankArea.contains(getLocalPlayer())){
             state = State.MOVE2BANK;
         } else if(bankArea.contains(getLocalPlayer()) && !Inventory.contains(food)){
             state = State.RESTOCK;
-        } else if(bankArea.contains(getLocalPlayer()) && Inventory.contains(food)){
+        } else if(!pickingArea.contains(getLocalPlayer()) && Inventory.contains(food)){
             state = State.MOVE2PICK;
         }
 
@@ -76,11 +76,12 @@ public class Thieving extends AbstractScript {
         }else if(getState().equals(State.MOVE2BANK)){
             Walking.walk(bankTile);
             log("Moving to bank");
+            sleep(1000);
             sleepUntil(() -> getLocalPlayer().getTile().equals(bankTile), 6000);
         }else if(getState().equals(State.RESTOCK)){
             log("BANKING");
             if(Bank.openClosest()){
-                Bank.withdraw("Raw lobster", 25);
+                Bank.withdraw("Lobster", 25);
                 Bank.close();
             }else {
                 sleepUntil(Bank::isOpen, 4000);
@@ -88,9 +89,9 @@ public class Thieving extends AbstractScript {
         }else if(getState().equals(State.MOVE2PICK)){
             Walking.walk(pickTile);
             log("Moving back to pick location");
-            sleepUntil(() -> getLocalPlayer().getTile().equals(pickTile), 6000);
+            sleepUntil(() -> getLocalPlayer().getTile().equals(pickTile), 4000);
         }
 
-        return 0;
+        return 500;
     }
 }
