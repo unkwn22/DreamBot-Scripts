@@ -106,7 +106,7 @@ public class GnomeStrongholdAgilityCourse extends AbstractScript {
             sleepUntil(() -> getLocalPlayer().getTile().equals(endPipeTile), 10000);
         }
 
-        return 0;
+        return 500;
     }
 
 }

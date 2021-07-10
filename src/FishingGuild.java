@@ -119,6 +119,6 @@ public class FishingGuild extends AbstractScript{
         } else if(getState().equals(State.FISHING)){
             sleep(1000);
         }
-        return 0;
+        return 500;
     }
 }
