@@ -20,7 +20,7 @@ public class Thieving extends AbstractScript {
     String targetNpc = "Warrior woman";
 
     Area pickingArea = new Area(2624, 3307, 2643, 3288);
-    Tile pickTile = new Tile(2636, 3296);
+    Tile pickTile = new Tile(2628, 3297);
     Area bankArea = new Area(2649, 3286, 2654, 3281);
     Tile bankTile = new Tile(2651, 3284);
 
@@ -75,11 +75,12 @@ public class Thieving extends AbstractScript {
             Walking.walk(bankTile);
             log("Moving to bank");
             sleep(1000);
-            sleepUntil(() -> getLocalPlayer().getTile().equals(bankTile), 6000);
+            sleepUntil(() -> getLocalPlayer().getTile().equals(bankTile), 3000);
         }else if(getState().equals(State.RESTOCK)){
             log("BANKING");
             if(Bank.openClosest()){
                 Bank.withdraw("Lobster", 25);
+                sleep(1000);
                 Bank.close();
             }else {
                 sleepUntil(Bank::isOpen, 4000);
