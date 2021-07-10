@@ -62,7 +62,7 @@ public class FishingGuild extends AbstractScript{
         }
 
         //idle state will initiate went idling for 3seconds
-        if(idle > 3){
+        if(idle > 2){
             log("IDLE initiating");
             state = State.MOVE2FISH;
         }
