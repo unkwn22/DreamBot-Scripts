@@ -7,7 +7,7 @@
 - Intellij
 
 # Getting Started - Environment settings (IntelliJ)
-  1. Install the Java Development Kit: the minimum requirment is Java 8, Java 11 is available. Needs to be targeted to Java 8.
+  1. Install Java Development Kit: the minimum requirment is Java 8, Java 11 is available. Needs to be targeted to Java 8.
   2. IntelliJ: create new Project to Java 8
   3. Adding dependencies through File > Project Structure > Libraries > (+) > locating your DreamBot client.jar file
   4. Adding artifact through the same windows, this time in Artifacts tab Add the workspace you have created, remove Extracted in output Layout
