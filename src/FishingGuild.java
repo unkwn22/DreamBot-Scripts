@@ -28,6 +28,7 @@ public class FishingGuild extends AbstractScript{
     Area fishingArea = new Area(2595, 3419, 2605, 3426);
     Tile bankTile = new Tile(2587, 3419);
     Area bankArea = new Area(2586, 3418, 2588, 3421);
+    boolean isFishing = false;
 
     NPC fishingSpot;
     GameObject bank;
@@ -38,10 +39,9 @@ public class FishingGuild extends AbstractScript{
 
     private State getState(){
 
-        if(fishingArea.contains(getLocalPlayer()) && getLocalPlayer().getAnimation() == -1 && !Inventory.isFull()){
+        if(fishingArea.contains(getLocalPlayer()) && getLocalPlayer().getAnimation() == -1  && !Inventory.isFull()){
             state = State.FISH;
-            sleep(1000, 1050);
-        } else if(fishingArea.contains(getLocalPlayer()) && getLocalPlayer().getAnimation() != -619 && Inventory.isFull()){
+        } else if(fishingArea.contains(getLocalPlayer()) && getLocalPlayer().getAnimation() == -1 && Inventory.isFull()){
             state = State.MOVE2BANK;
         } else if(bankArea.contains(getLocalPlayer()) && Inventory.isFull()){
             state = State.BANKING;
@@ -58,7 +58,8 @@ public class FishingGuild extends AbstractScript{
         if(getState().equals(State.FISH)){
             fishingSpot = NPCs.closest(f -> f != null && f.getName().contentEquals("Fishing spot") && fishingArea.contains(f));
             fishingSpot.interact("Cage");
-            sleepUntil(() -> getLocalPlayer().getAnimation() == -1, 100000);
+            sleep(2000);
+            sleepUntil(() -> getLocalPlayer().getAnimation() == -1, 8000);
         } else if(getState().equals(State.BANKING)){
             if(Bank.openClosest()){
                 Bank.deposit("Raw lobster", 27);
@@ -74,6 +75,8 @@ public class FishingGuild extends AbstractScript{
         } else if(getState().equals(State.MOVE2BANK)){
             Walking.walk(bankTile);
             sleepUntil(() -> getLocalPlayer().getTile().equals(bankTile), 1000);
+        } else if(getState().equals(State.FISHING)){
+            sleep(1000);
         }
         return 0;
     }
