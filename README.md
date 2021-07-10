@@ -7,7 +7,7 @@
 - Intellij
 
 # Getting Started - Environment settings (IntelliJ)
-  1. Install the Java Development Kit: the minimum requirment is Java 8, Java 11 is available. Needs to be targeted to Java 8.
+  1. Install Java Development Kit: the minimum requirment is Java 8, Java 11 is available. Needs to be targeted to Java 8.
   2. IntelliJ: create new Project to Java 8
   3. Adding dependencies through File > Project Structure > Libraries > (+) > locating your DreamBot client.jar file
   4. Adding artifact through the same windows, this time in Artifacts tab Add the workspace you have created, remove Extracted in output Layout
@@ -22,3 +22,6 @@
 - Educational Youtube Channels
   - https://www.youtube.com/channel/UCCDS_ii2C6nTXs9Y2E_YIyA
   - https://www.youtube.com/channel/UCUs4fCL-FGQz3HW1HqCDAlw
+- Runescape mapTile locator: https://explv.github.io/?centreX=2601&centreY=3419&centreZ=0&zoom=11
+- Reference source code:
+  - https://github.com/Nezzima/DreamBot/blob/master/DreambotTutIsland/src/nezz/dreambot/scriptmain/tutisland/TutorialIsland.java
