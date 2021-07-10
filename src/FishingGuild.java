@@ -70,10 +70,12 @@ public class FishingGuild extends AbstractScript{
         } else if(getState().equals(State.BANKING)){
             if(Bank.openClosest()){
                 Bank.deposit("Raw lobster", 27);
-                if(Bank.count("Raw lobster") == 600){
+                if(Bank.count("Raw lobster") > 200){
+                    Bank.close();
                     Tabs.logout();
                     stop();
                 }
+                Bank.close();
             }else {
                 sleepUntil(Bank::isOpen, 3000);
             }
