@@ -39,11 +39,9 @@ public class FishingGuild extends AbstractScript{
     private State getState(){
 
         if(fishingArea.contains(getLocalPlayer()) && getLocalPlayer().getAnimation() == -1 && !Inventory.isFull()){
-            log("fish");
             state = State.FISH;
             sleep(1000, 1050);
         } else if(fishingArea.contains(getLocalPlayer()) && getLocalPlayer().getAnimation() != -619 && Inventory.isFull()){
-            log("banking");
             state = State.MOVE2BANK;
         } else if(bankArea.contains(getLocalPlayer()) && Inventory.isFull()){
             state = State.BANKING;
