@@ -26,3 +26,4 @@
 - Reference source code:
   - https://github.com/Nezzima/DreamBot/blob/master/DreambotTutIsland/src/nezz/dreambot/scriptmain/tutisland/TutorialIsland.java
   - https://github.com/FrostTorrents/GiantRatKillerV2
+  - https://github.com/Matsumotorise/DreamBot-Scripts
