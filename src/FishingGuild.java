@@ -61,7 +61,8 @@ public class FishingGuild extends AbstractScript{
             idle = 0;
         }
 
-        if(idle > 4){
+        //idle state will initiate went idling for 3seconds
+        if(idle > 3){
             log("IDLE initiating");
             state = State.MOVE2FISH;
         }
@@ -91,7 +92,9 @@ public class FishingGuild extends AbstractScript{
                 sleepUntil(Bank::isOpen, 4000);
             }
         } else if(getState().equals(State.MOVE2FISH)){
+            //reseting idle count
             idle = 0;
+            //using last tile log inorder to move when idling
             if(lastTile == null){
                 randomNum = ran.nextInt(3);
                 fishingTile = new Tile(tiles[randomNum][0], tiles[randomNum][1]);
@@ -100,6 +103,7 @@ public class FishingGuild extends AbstractScript{
                 while(true){
                     randomNum = ran.nextInt(3);
                     fishingTile = new Tile(tiles[randomNum][0], tiles[randomNum][1]);
+                    //wont break till randomized tile is not the same as last tile
                     if(fishingTile != lastTile){
                         lastTile = fishingTile;
                         break;
