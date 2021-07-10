@@ -22,3 +22,6 @@
 - Educational Youtube Channels
   - https://www.youtube.com/channel/UCCDS_ii2C6nTXs9Y2E_YIyA
   - https://www.youtube.com/channel/UCUs4fCL-FGQz3HW1HqCDAlw
+- Runescape mapTile locator: https://explv.github.io/?centreX=2601&centreY=3419&centreZ=0&zoom=11
+- Reference source code:
+  - https://github.com/Nezzima/DreamBot/blob/master/DreambotTutIsland/src/nezz/dreambot/scriptmain/tutisland/TutorialIsland.java
