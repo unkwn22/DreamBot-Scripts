@@ -77,6 +77,8 @@ public class SandCrabs extends AbstractScript {
             sleepUntil(() -> getLocalPlayer().getTile().equals(awayTile), 5000);
             Walking.walk(awayTile2);
             sleepUntil(() -> getLocalPlayer().getTile().equals(awayTile), 4000);
+            Walking.walk(awayTile);
+            sleepUntil(() -> getLocalPlayer().getTile().equals(awayTile), 5000);
             idle = 0;
         } else if(getState().equals(State.RETURNING)){
             Walking.walk(returnTile);
