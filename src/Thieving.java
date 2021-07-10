@@ -3,8 +3,6 @@ import org.dreambot.api.methods.container.impl.bank.Bank;
 import org.dreambot.api.methods.interactive.NPCs;
 import org.dreambot.api.methods.map.Area;
 import org.dreambot.api.methods.map.Tile;
-import org.dreambot.api.methods.tabs.Tab;
-import org.dreambot.api.methods.tabs.Tabs;
 import org.dreambot.api.methods.walking.impl.Walking;
 import org.dreambot.api.script.AbstractScript;
 import org.dreambot.api.script.Category;
@@ -22,7 +20,7 @@ public class Thieving extends AbstractScript {
     String targetNpc = "Warrior woman";
 
     Area pickingArea = new Area(2624, 3307, 2643, 3288);
-    Tile pickTile = new Tile(2631, 3295);
+    Tile pickTile = new Tile(2636, 3296);
     Area bankArea = new Area(2649, 3286, 2654, 3281);
     Tile bankTile = new Tile(2651, 3284);
 
@@ -72,7 +70,7 @@ public class Thieving extends AbstractScript {
         }else if(getState().equals(State.HEAL)){
             log("Eating!");
             Inventory.interact(food, "Eat");
-            sleep(1000);
+            sleepUntil(() -> getLocalPlayer().getHealthPercent() >= 32, 2000);
         }else if(getState().equals(State.MOVE2BANK)){
             Walking.walk(bankTile);
             log("Moving to bank");
