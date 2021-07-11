@@ -21,8 +21,9 @@ public class SandCrabs extends AbstractScript {
     int idle = 0;
 
     Tile returnTile = new Tile(1749, 3469);
-    Tile awayTile = new Tile(1750,3484);
-    Tile awayTile2 = new Tile(1748, 3496);
+    Tile awayTile = new Tile(1757,3484);
+    Tile awayTile2 = new Tile(1765, 3497);
+    Tile awayTile3 = new Tile(1763, 3501);
 
     Area area = new Area(1745, 3467, 1752, 3472);
 
@@ -77,6 +78,10 @@ public class SandCrabs extends AbstractScript {
             sleepUntil(() -> getLocalPlayer().getTile().equals(awayTile), 5000);
             Walking.walk(awayTile2);
             sleepUntil(() -> getLocalPlayer().getTile().equals(awayTile2), 6000);
+            Walking.walk(awayTile3);
+            sleepUntil(() -> getLocalPlayer().getTile().equals(awayTile3), 5000);
+            Walking.walk(awayTile2);
+            sleepUntil(() -> getLocalPlayer().getTile().equals(awayTile2), 5000);
             Walking.walk(awayTile);
             sleepUntil(() -> getLocalPlayer().getTile().equals(awayTile), 5000);
             idle = 0;
