@@ -16,8 +16,8 @@ import org.dreambot.api.wrappers.items.GroundItem;
 public class CanifisRoofTops extends AbstractScript {
 
     //camera
-    final static int PITCH = 377;
-    final static int YAW = 1288;
+    final int PITCH = 375;
+    final int YAW = 1283;
 
     State state;
     GroundItem item = null;
