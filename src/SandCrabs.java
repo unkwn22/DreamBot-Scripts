@@ -43,7 +43,7 @@ public class SandCrabs extends AbstractScript {
         } else if(!getLocalPlayer().isInteractedWith() && getLocalPlayer().getTile().equals(returnTile)){
             idle++;
             sleep(1000);
-        } else if(getLocalPlayer().isInteractedWith() && getLocalPlayer().getTile().equals(returnTile) && getLocalPlayer().getAnimation() == 426){
+        } else if(getLocalPlayer().isInteractedWith() && getLocalPlayer().getTile().equals(returnTile)){
             state = State.FIGHTING;
         }
 
