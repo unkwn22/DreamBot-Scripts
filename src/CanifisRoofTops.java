@@ -29,51 +29,52 @@ public class CanifisRoofTops extends AbstractScript {
     GameObject tree;
     Tile treeTile = new Tile(3505, 3489);
     Tile treeEnd = new Tile(3506, 3492, 2);
+    Tile tree2End = new Tile(3507, 3492, 2);
 
     GameObject gap1;
     Tile gap1Tile = new Tile(3505, 3498, 2);
     Tile gap1End = new Tile(3502, 3504, 2);
-    Area firstRoof = new Area(3505, 3496, 3508, 3494, 2);
+    Area firstRoof = new Area(3504, 3498, 3511, 3492, 2);
     Area firstFall = new Area(3501, 3501, 3505, 3498);
 
     GameObject gap2;
     Tile gap2Tile = new Tile(3496, 3504, 2);
     Tile gap2End = new Tile(3492, 3504, 2);
-    Area secondRoof = new Area(3497, 3506, 3503, 3504,2);
+    Area secondRoof = new Area(3496, 3507, 3504, 3503, 2);
     Area secondFall = new Area(3495, 3501, 3495, 3498);
 
     GameObject gap3;
     Tile gap3Tile = new Tile(3485, 3499, 2);
     Tile gap3End = new Tile(3479, 3499, 3);
-    Area thirdRoof = new Area(3492, 3504, 3487, 3499, 2);
+    Area thirdRoof = new Area(3493, 3505, 3485, 3498, 2);
     Area thirdFall = new Area(3481, 3502, 3483, 3498);
 
     GameObject gap4;
     Tile gap4Tile = new Tile(3478, 3491, 3);
     Tile gap4End = new Tile(3478, 3486, 2);
-    Area fourthRoof = new Area(3479, 3499, 3475, 3492, 3);
+    Area fourthRoof = new Area(3480, 3500, 3474, 3491, 3);
     Area fourthFall = new Area(3476, 3490, 3481, 3489);
 
     GameObject pole;
     Tile poleTile = new Tile(3480, 3483, 2);
     Tile poleEnd = new Tile(3489, 3476, 3);
     Tile poleGlitch = new Tile(3487, 3476,3);
-    Area fifthRoof = new Area(3483, 3487, 3477, 3481, 2);
+    Area fifthRoof = new Area(3477, 3487, 3484, 3481, 2);
     Area fifthFall = new Area(3490, 3484, 3484, 3478);
 
     GameObject gap5;
     Tile gap5Tile = new Tile(3503, 3476, 3);
     Tile gap5End = new Tile(3510, 3476, 2);
-    Area sixthRoof = new Area(3489, 3476, 3500, 3470, 3);
+    Area sixthRoof = new Area(3486, 3477, 3504, 3471, 3);
     Area lastFall = new Area(3504, 3484, 3507, 3474);
 
     GameObject gap6;
     Tile gap6Tile = new Tile(3510, 3483, 2);
     Tile gap6End = new Tile(3510, 3485);
-    Area seventhRoof = new Area(3515, 3482, 3510, 3475, 2);
+    Area seventhRoof = new Area(3509, 3483, 3516, 3474, 2);
 
     private enum State{
-        TREE, GAP1, GAP2, GAP3, GAP4, POLE, GAP5, GAP6, MID_FALL, ITEM, ON_ROOF
+        TREE, GAP1, GAP2, GAP3, GAP4, POLE, GAP5, GAP6, MID_FALL, ITEM
     }
 
     private State getState(){
@@ -81,42 +82,54 @@ public class CanifisRoofTops extends AbstractScript {
 
         if(getLocalPlayer().getTile().equals(gap6End)){
             state = State.TREE;
-        } else if((getLocalPlayer().getTile().equals(treeEnd) || firstRoof.contains(getLocalPlayer())) && !firstRoof.contains(item)) {
-            state = State.GAP1;
-        } else if(getLocalPlayer().getTile().equals(treeEnd) && firstRoof.contains(item)){
-            state = State.ITEM;
-        } else if((getLocalPlayer().getTile().equals(gap1End) || secondRoof.contains(getLocalPlayer())) && !secondRoof.contains(item)){
-            state = State.GAP2;
-        } else if(getLocalPlayer().getTile().equals(gap1End) && secondRoof.contains(item)){
-            state = State.ITEM;
-        } else if((getLocalPlayer().getTile().equals(gap2End) || thirdRoof.contains(getLocalPlayer())) && !thirdRoof.contains(item)){
-            state = State.GAP3;
-        } else if(getLocalPlayer().getTile().equals(gap2End) && thirdRoof.contains(item)){
-            state = State.ITEM;
-        } else if((getLocalPlayer().getTile().equals(gap3End) || fourthRoof.contains(getLocalPlayer())) && !fourthRoof.contains(item)){
-            state = State.GAP4;
-        } else if(getLocalPlayer().getTile().equals(gap3End) && fourthRoof.contains(item)){
-            state = State.ITEM;
-        } else if((getLocalPlayer().getTile().equals(gap4End) || fifthRoof.contains(getLocalPlayer())) && !fifthRoof.contains(item)){
-            state = State.POLE;
-        } else if(getLocalPlayer().getTile().equals(gap4End) && fifthRoof.contains(item)){
-            state = State.ITEM;
-        } else if((getLocalPlayer().getTile().equals(poleEnd) || sixthRoof.contains(getLocalPlayer()) || getLocalPlayer().getTile().equals(poleGlitch) && !sixthRoof.contains(item))){
-            state = State.GAP5;
-        } else if(getLocalPlayer().getTile().equals(poleEnd) && sixthRoof.contains(item)){
-            state = State.ITEM;
-        } else if((getLocalPlayer().getTile().equals(gap5End) || seventhRoof.contains(getLocalPlayer())) && !seventhRoof.contains(item)){
-            state = State.GAP6;
-        } else if(getLocalPlayer().getTile().equals(gap5End) && seventhRoof.contains(item)){
-            state = State.ITEM;
+        } else if(firstRoof.contains(getLocalPlayer())){
+            if(!firstRoof.contains(item)){
+                state = State.GAP1;
+            }else if(firstRoof.contains(item)){
+                state = State.ITEM;
+            }
+        } else if(secondRoof.contains(getLocalPlayer())){
+            if(!secondRoof.contains(item)){
+                state = State.GAP2;
+            }else if(secondRoof.contains(item)){
+                state = State.ITEM;
+            }
+        } else if(thirdRoof.contains(getLocalPlayer())){
+            if(!thirdRoof.contains(item)){
+                state = State.GAP3;
+            }else if(thirdRoof.contains(item)){
+                state = State.ITEM;
+            }
+        } else if(fourthRoof.contains(getLocalPlayer())){
+            if(!fourthRoof.contains(item)){
+                state = State.GAP4;
+            }else if(fourthRoof.contains(item)){
+                state = State.ITEM;
+            }
+        } else if(fifthRoof.contains(getLocalPlayer())){
+            if(!fifthRoof.contains(item)){
+                state = State.POLE;
+            }else if(fifthRoof.contains(item)){
+                state = State.ITEM;
+            }
+        } else if(sixthRoof.contains(getLocalPlayer())){
+            if(!sixthRoof.contains(item)){
+                state = State.GAP5;
+            }else if(sixthRoof.contains(item)){
+                state = State.ITEM;
+            }
+        } else if(seventhRoof.contains(getLocalPlayer())){
+            if(!seventhRoof.contains(item)){
+                state = State.GAP6;
+            }else if(seventhRoof.contains(item)){
+                state = State.ITEM;
+            }
         } else if(midArea.contains(getLocalPlayer())){
             state = State.TREE;
         } else if(thirdFall.contains(getLocalPlayer()) || fourthFall.contains(getLocalPlayer()) || fifthFall.contains(getLocalPlayer())){
             state = State.MID_FALL;
         } else if(firstFall.contains(getLocalPlayer()) || secondFall.contains(getLocalPlayer()) || lastFall.contains(getLocalPlayer())){
             state = State.TREE;
-        } else if(firstRoof.contains(getLocalPlayer()) || secondRoof.contains(getLocalPlayer()) || thirdRoof.contains(getLocalPlayer()) || fourthRoof.contains(getLocalPlayer()) || fifthRoof.contains(getLocalPlayer()) || sixthRoof.contains(getLocalPlayer()) || seventhRoof.contains(getLocalPlayer())){
-            state = State.ON_ROOF;
         }
         return state;
     }
