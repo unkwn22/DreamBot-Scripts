@@ -16,8 +16,8 @@ import org.dreambot.api.wrappers.items.GroundItem;
 public class CanifisRoofTops extends AbstractScript {
 
     //camera
-    final int PITCH = 375;
-    final int YAW = 1283;
+    final int PITCH = 383;
+    final int YAW = 1343;
 
     State state;
     GroundItem item = null;
@@ -152,6 +152,7 @@ public class CanifisRoofTops extends AbstractScript {
         }  else if(getState().equals(State.TREE)){
             tree = GameObjects.closest(c -> c != null && c.getName().contentEquals("Tall tree") && c.getTile().equals(treeTile));
             tree.interact("Climb");
+            Camera.keyboardRotateTo(YAW, PITCH);
             log("Climbing tree");
             sleepUntil(() -> getLocalPlayer().getTile().equals(treeEnd), 5000);
 
