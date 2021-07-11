@@ -29,7 +29,6 @@ public class CanifisRoofTops extends AbstractScript {
     GameObject tree;
     Tile treeTile = new Tile(3505, 3489);
     Tile treeEnd = new Tile(3506, 3492, 2);
-    Tile tree2End = new Tile(3507, 3492, 2);
 
     GameObject gap1;
     Tile gap1Tile = new Tile(3505, 3498, 2);
@@ -58,7 +57,6 @@ public class CanifisRoofTops extends AbstractScript {
     GameObject pole;
     Tile poleTile = new Tile(3480, 3483, 2);
     Tile poleEnd = new Tile(3489, 3476, 3);
-    Tile poleGlitch = new Tile(3487, 3476,3);
     Area fifthRoof = new Area(3477, 3487, 3484, 3481, 2);
     Area fifthFall = new Area(3490, 3484, 3484, 3478);
 
