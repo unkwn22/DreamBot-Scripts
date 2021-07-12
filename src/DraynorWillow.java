@@ -75,7 +75,7 @@ public class DraynorWillow extends AbstractScript {
             tree = GameObjects.closest(treeName);
             tree.interact(interactName);
             log("FINDING TREE");
-            sleepUntil(()-> getLocalPlayer().getAnimation() == animation, randomSleep[ran.nextInt(randomSleep.length)]);
+            sleepUntil(()-> getLocalPlayer().getAnimation() == animation, randomSleep[ran.nextInt(2) + 2]);
         } else if(getState().equals(State.BANKING)) {
             //Since bank is closeby
             if(Bank.openClosest()){
